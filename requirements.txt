@@ -1,15 +1,15 @@
-- bs4
+bs4
 
-- rsa
+rsa
 
-- gtts
+gtts
 
-- pytz
+pytz
 
-- thrift
+thrift
 
-- requests
+requests
 
-- googletrans
+googletrans
 
-- humanfriendly
+humanfriendly
