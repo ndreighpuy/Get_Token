@@ -15,7 +15,7 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
 #puy = LINE() 
-puy = LINE("TARO TOKENMU DIMARI")    # UNTUK LOGIN TOKEN #
+puy = LINE("EuoGiAiu8K3umZDKIMs3.m7QAK9mmg/fv3Yt11op1GW.o62lpZEnzqpwCeJTc373hFNPW06E5jCB/2DZ2xb9Z6E=")    # UNTUK LOGIN TOKEN #
 #puy = LINE('','')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
@@ -25,8 +25,28 @@ botStart = time.time()
 
 msg_dict = {}
 
-Owner = ["uac8e3eaf1eb2a55770bf10c3b2357c33"]
-Admin =["uac8e3eaf1eb2a55770bf10c3b2357c33"]
+Owner = ["uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583","TARO MIDMU DIMARI DAN HAPUS PAGAR"]
+Admin =["uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583","TARO MIDMU DIMARI DAN HAPUS PAGAR"]
+
+settings = {
+    "autoJoin": True,
+    "autoLeave": False,
+    "Inroom": True,
+    "Outroom": True,
+    "timeRestart": "18000",
+    "changeGroupPicture": [],
+    "limit": 50,
+    "limits": 50,
+    "wordban": [],
+    "keyCommand": "",
+    "myProfile": {
+        "displayName": "",
+        "coverId": "",
+        "pictureStatus": "",
+        "statusMessage": ""
+    },
+    "prefix": False
+}
 
 read = {
     "ROM": {},
