@@ -15,8 +15,8 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
 #puy = LINE() 
-#puy = LINE("")    # UNTUK LOGIN TOKEN #
-puy = LINE("")
+#puy = LINE("Eu3uZTYkIRM2fSpwaDw4.hv+9sZ7pkk5jYglvNr+V1a.VhhW/7dJnrAmDhL7sIZ/jQC64HM9Uz84BTnpLcHVcHQ=")    # UNTUK LOGIN TOKEN #
+puy = LINE("EuraxIvzWh7T5TFCM0Xc.NNBWxvmEnnLSJ4NTVieR3a.qCbL5igHVWXwDUwtH4lAkYAxS3hQqA4Y3HePMyg4RSY=")
 #puy = LINE('','')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
@@ -223,6 +223,7 @@ def helpmessage():
                     " " + key + "7) Logout" + "\n" + \
                     " " + key + "8) Perbarui" + "\n" + \
                     "  「Use " + key + " For the Prefix」" + "\n" + \
+                    "~「Creator : @!」"
                     " 「 From Helloworld / Edited by Puy 」"
     return helpMessage
                     
@@ -302,10 +303,24 @@ def puyBot(op):
                                 puy.sendMessage(to, "[ Speed ]\nKecepatan mengirim pesan {} detik puy".format(str(elapsed_time)))
                                 
                             elif cmd == "perbarui":
-                              if msg._from in Owner:
-                                puy.sendMessage(to, "I'll be Back")
-                                sendMention(to, "@! \nBot Restarted", [sender])
-                                restartBot()                                
+                              if sender in Owner:
+                                tz = pytz.timezone("Asia/Jakarta")
+                                timeNow = datetime.now(tz=tz)
+                                day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"]
+                                hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
+                                bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+                                hr = timeNow.strftime("%A")
+                                bln = timeNow.strftime("%m")
+                                for i in range(len(day)):
+                                    if hr == day[i]: hasil = hari[i]
+                                for k in range(0, len(bulan)):
+                                    if bln == str(k): bln = bulan[k-1]
+                                Timed = hasil + ", " + timeNow.strftime('%d') + " - " + bln + " - " + timeNow.strftime('%Y') + "\nJam : [ " + timeNow.strftime('%H:%M:%S') + " ]"
+                                #if msg.to not in read['readPoint']:
+                                    #dap.sendMessage(msg.to, "「 NOTIFIED BOT SPEED 」\n\n" + Timed)
+                                #sendMention(to, "@! \nPUY berhasil diperbarui.\n\nPada :\n" + Timed, [sender])
+                                puy.sendMessage(to, "PUY berhasil diperbarui.\n\nPada :\n" + Timed)
+                                restartBot()
                               else:
                                   puy.sendMessage("Permission Denied")
                                   
