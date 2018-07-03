@@ -15,7 +15,7 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
 #puy = LINE() 
-puy = LINE("EuoGiAiu8K3umZDKIMs3.m7QAK9mmg/fv3Yt11op1GW.o62lpZEnzqpwCeJTc373hFNPW06E5jCB/2DZ2xb9Z6E=")    # UNTUK LOGIN TOKEN #
+puy = LINE("TARO TOKEMU DIMARI")    # UNTUK LOGIN TOKEN #
 #puy = LINE('','')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
@@ -676,13 +676,15 @@ def puyBot(op):
                                 settings["keyCommand"] = str(key).lower()
                                 sendMessageWithFooter(to, "text [ {} ]".format(str(key).lower()))        
                         if text.lower() == "#prefix":
-                            puy.sendMessage(to, "\nPrefix Saat ini adalah [ {} ]\n".format(str(settings["keyCommand"])))                                                                                            
+                            puy.sendMessage(to, "Prefix diterapkan menjadi [ {} ]\n".format(str(settings["keyCommand"])))
+                        elif text.lower() == "prefix":
+                            puy.sendMessage(to, "Prefix saat ini [ {} ]".format(str(settings["keyCommand"])))
                         elif text.lower() == "prefix on":
                             settings["prefix"] = True
-                            puy.sendMention(to, "@! \n\n[ Notified Prefix Key ]\nBerhasil mengaktifkan Prefix", [sender])
+                            puy.sendMessage(to, "[ Notified Prefix Key ]\nBerhasil mengaktifkan Prefix")
                         elif text.lower() == "prefix off":
                             settings["prefix"] = False
-                            puy.sendMention(to, "@! \n\n[ Notified Prefix Key ]\nBerhasil menonaktifkan Prefix", [sender])
+                            puy.sendMessage(to, "[ Notified Prefix Key ]\nBerhasil menonaktifkan Prefix")
                             
                     if msg.contentType == 0:
                         if text is None:
