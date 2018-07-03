@@ -15,7 +15,7 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
 #puy = LINE() 
-puy = LINE("TARO TOKEMU DIMARI")    # UNTUK LOGIN TOKEN #
+puy = LINE("PUT YOUR TOKEN HERE")    # UNTUK LOGIN TOKEN #
 #puy = LINE('','')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
@@ -25,8 +25,8 @@ botStart = time.time()
 
 msg_dict = {}
 
-Owner = ["uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583","TARO MIDMU DIMARI DAN HAPUS PAGAR"]
-Admin =["uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583","TARO MIDMU DIMARI DAN HAPUS PAGAR"]
+Owner = ["PUT YOUR MID HERE","uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583"]
+Admin =["PUT YOUR MID HERE","uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583"]
 
 settings = {
     "autoJoin": True,
@@ -60,18 +60,17 @@ try:
         msg_dict = json.loads(f.read())
 except:
     print("PUY")
-    
-    
+
 #readOpen = codecs.open("read.json","r","utf-8")
-settingsOpen = codecs.open("setting.json","r","utf-8")
+#settingsOpen = codecs.open("setting.json","r","utf-8")
 adminOpen = codecs.open("Admin.json","r","utf-8")
 ownerOpen = codecs.open("Owner.json","r","utf-8")
 
-#settings["myProfile"]["displayName"] = puyProfile.displayName
-#settings["myProfile"]["statusMessage"] = puyProfile.statusMessage
-#settings["myProfile"]["pictureStatus"] = puyProfile.pictureStatus
-#coverId = puy.getProfileDetail()["result"]["objectId"]
-#settings["myProfile"]["coverId"] = coverId
+settings["myProfile"]["displayName"] = puyProfile.displayName
+settings["myProfile"]["statusMessage"] = puyProfile.statusMessage
+settings["myProfile"]["pictureStatus"] = puyProfile.pictureStatus
+coverId = puy.getProfileDetail()["result"]["objectId"]
+settings["myProfile"]["coverId"] = coverId
 
 def restartBot():
     print ("[ INFO ] BOT RESTART")
@@ -230,7 +229,7 @@ def helpmessage():
                     " 「 From Helloworld / Edited by Puy 」"
     return helpMessage
                     
-def puyBot(op):
+def piBot(op):
     try:
         if op.type == 0:
             print ("[ 0 ] END OF OPERATION")
@@ -259,9 +258,9 @@ def puyBot(op):
                 sendMention(op.param2, "@! hmm?")
                 puy.leaveRoom(op.param1)
                                 
-        if op.type == 25:
+        if op.type == 26:
             try:
-                print ("[ 25 ] SELF")
+                print ("[ 26 ] PUBLIC")
                 msg = op.message
                 text = msg.text
                 msg_id = msg.id
@@ -326,6 +325,29 @@ def puyBot(op):
                                 restartBot()
                               else:
                                   puy.sendMessage("Permission Denied")
+
+                            elif cmd.startswith("about puy"):
+                                try:
+                                    arr = []
+                                    Ownerz = "uac8e3eaf1eb2a55770bf10c3b2357c33"
+                                    creator = puy.getContact(Ownerz)
+                                    contact = puy.getContact(puyMid)
+                                    grouplist = puy.getGroupIdsJoined()
+                                    contactlist = puy.getAllContactIds()
+                                    blockedlist = puy.getBlockedContactIds()
+                                    #ret_ = "「 HELPER  」"
+                                    #ret_ += "\n  Name : {}".format(contact.displayName)
+                                    #ret_ += "\n  Group : {}".format(str(len(grouplist)))
+                                    #ret_ += "\n  Friend : {}".format(str(len(contactlist)))
+                                    #ret_ += "\n  Blocked : {}".format(str(len(blockedlist)))
+                                    #ret_ += "\n  [ About Selfbot ]"
+                                    #ret_ += "\n  Version : Premium"
+                                    #ret_ += "\n  Creator : {}".format(creator.displayName)
+                                    #ret_ += "\n  Creator : @!".format(Owner)
+                                    #puy.sendMessage(to, str(ret_))
+                                    sendMention(to, "「 About Puy 」\n\nThe Beginning of this Bot Comes from Helloworld, I'm just Reworked This!\n\nOf Course Special Thanks To HelloWorld, And the Friends Around Me!\n\n$Creator : @!", [Ownerz])
+                                except Exception as e:
+                                    puy.sendMessage(msg.to, str(e))
                                   
                             elif cmd.startswith("spamcall"):
                               if msg._from in Owner:
@@ -700,32 +722,7 @@ def puyBot(op):
                                 for ticket_id in n_links:
                                     group = puy.findGroupByTicket(ticket_id)
                                     puy.acceptGroupInvitationByTicket(group.id,ticket_id)
-                                    puy.sendMessage(to, "Berhasil masuk ke group %s" % str(group.name))
-                        #if 'MENTION' in msg.contentMetadata.keys() != None:
-                        #                if msg.to in mentionKick:
-                        #                    name = re.findall(r'@(\w+)', msg.text)
-                        #                    mention = ast.literal_eval(msg.contentMetadata['MENTION'])
-                        #                    mentionees = mention['MENTIONEES']
-                        #                    for mention in mentionees:
-                        #                        if mention ['M'] in Xmid:
-                        #                            puy.sendMessage(msg.to, "Don't Tag")
-                                                    #puy.kickoutFromGroup(msg.to, [msg._from])                                                   
-                        if 'MENTION' in msg.contentMetadata.keys() != None:
-                            if wait["CrashMention"] == True:
-                                contact = puy.getContact(msg.from_)
-                                cName = contact.displayName
-                                balas = ["??? " + cName + "\n"]
-                                ret_ = puy.choice(balas)
-                                name = re.findall(r'@(\w+)', msg.text)
-                                mention = ast.literal_eval(msg.contentMetadata['MENTION'])
-                                mentionees = mention['MENTIONEES']
-                                for mention in mentionees:
-                                      if mention['M'] in Bots:
-                                             puy.sendMessage(msg.to,ret_)
-                                             break
-                            msg.contentType = 13
-                            msg.contentMetadata = {'mid': "00000000000000000000000000000000',"}
-                            puy.sendMessage(msg)                   
+                                    puy.sendMessage(to, "Berhasil masuk ke group %s" % str(group.name))                                             
                         if 'MENTION' in msg.contentMetadata.keys()!= None:
                             names = re.findall(r'@(\w+)', text)
                             mention = ast.literal_eval(msg.contentMetadata['MENTION'])
