@@ -1,0 +1,15 @@
+- bs4
+
+- rsa
+
+- gtts
+
+- pytz
+
+- thrift
+
+- requests
+
+- googletrans
+
+- humanfriendly
