@@ -16,7 +16,7 @@ $ python -m pip install -r requirements.txt
 ```
 
 
-## * Of Course BIG THX TO :*
+## * Of Course BIG THX TO *
 
 ## Author
 Muhammad Mursalin Darmamawan / [@Alin](https://line.me/t/p/~muhmursalind)
