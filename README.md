@@ -27,6 +27,4 @@ Fadhiil Rachman / [@fadhiilrachman](https://www.instagram.com/fadhiilrachman)
 
 
 ## Contact Me At
-
-![logo](3403923.png)
-[Here](https://line.me/ti/p/~yapuy)
+[PUY](https://line.me/ti/p/~yapuy)
