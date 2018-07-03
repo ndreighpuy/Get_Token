@@ -15,7 +15,7 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
 #puy = LINE() 
-puy = LINE("TARO TOKENMU DISINI")    # UNTUK LOGIN TOKEN #
+puy = LINE("TARO TOKENMU DIMARI")    # UNTUK LOGIN TOKEN #
 #puy = LINE('','')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
@@ -28,22 +28,30 @@ msg_dict = {}
 Owner = ["uac8e3eaf1eb2a55770bf10c3b2357c33"]
 Admin =["uac8e3eaf1eb2a55770bf10c3b2357c33"]
 
+read = {
+    "ROM": {},
+    "readPoint": {},
+    "readMember": {},
+    "readTime": {}
+}
+
 try:
     with open("Log_data.json","r",encoding="utf_8_sig") as f:
         msg_dict = json.loads(f.read())
 except:
     print("PUY")
-
-readOpen = codecs.open("read.json","r","utf-8")
+    
+    
+#readOpen = codecs.open("read.json","r","utf-8")
 settingsOpen = codecs.open("setting.json","r","utf-8")
 adminOpen = codecs.open("Admin.json","r","utf-8")
 ownerOpen = codecs.open("Owner.json","r","utf-8")
 
-settings["myProfile"]["displayName"] = puyProfile.displayName
-settings["myProfile"]["statusMessage"] = puyProfile.statusMessage
-settings["myProfile"]["pictureStatus"] = puyProfile.pictureStatus
-coverId = puy.getProfileDetail()["result"]["objectId"]
-settings["myProfile"]["coverId"] = coverId
+#settings["myProfile"]["displayName"] = puyProfile.displayName
+#settings["myProfile"]["statusMessage"] = puyProfile.statusMessage
+#settings["myProfile"]["pictureStatus"] = puyProfile.pictureStatus
+#coverId = puy.getProfileDetail()["result"]["objectId"]
+#settings["myProfile"]["coverId"] = coverId
 
 def restartBot():
     print ("[ INFO ] BOT RESTART")
@@ -199,7 +207,6 @@ def helpmessage():
                     " " + key + "7) Logout" + "\n" + \
                     " " + key + "8) Perbarui" + "\n" + \
                     "  「Use " + key + " For the Prefix」" + "\n" + \
-                    "~「Creator : @!」"
                     " 「 From Helloworld / Edited by Puy 」"
     return helpMessage
                     
@@ -276,7 +283,7 @@ def puyBot(op):
                                 start = time.time()
                                 puy.sendMessage(to, "...")
                                 elapsed_time = time.time() - start
-                                puy.sendMessage(to, "[ Speed ]\nKecepatan mengirim pesan {} detik puy".format(str(elapsed_time)))
+                                puy.sendMessage(to, "{}".format(str(elapsed_time)))
                                 
                             elif cmd == "perbarui":
                               if sender in Owner:
@@ -735,11 +742,7 @@ def puyBot(op):
                     if to in read["readPoint"]:
                         if sender not in read["ROM"][to]:
                             read["ROM"][to][sender] = True
-                    #if sender in settings["mimic"]["target"] and settings["mimic"]["status"] == True and settings["mimic"]["target"][sender] == True:
-                    #    text = msg.text
-                    #    if text is not None:
-                    #        puy.sendMessage(msg.to,text)
-
+                    
 ## INI KALAU MAU DI HAPUS SILAHKAN ## 
                     elif msg.contentType == 16:
                         if settings["checkPost"] == True:
