@@ -15,8 +15,7 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
 #puy = LINE() 
-#puy = LINE("Eu3uZTYkIRM2fSpwaDw4.hv+9sZ7pkk5jYglvNr+V1a.VhhW/7dJnrAmDhL7sIZ/jQC64HM9Uz84BTnpLcHVcHQ=")    # UNTUK LOGIN TOKEN #
-puy = LINE("EuraxIvzWh7T5TFCM0Xc.NNBWxvmEnnLSJ4NTVieR3a.qCbL5igHVWXwDUwtH4lAkYAxS3hQqA4Y3HePMyg4RSY=")
+puy = LINE("TARO TOKENMU DISINI")    # UNTUK LOGIN TOKEN #
 #puy = LINE('','')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
@@ -29,40 +28,17 @@ msg_dict = {}
 Owner = ["uac8e3eaf1eb2a55770bf10c3b2357c33"]
 Admin =["uac8e3eaf1eb2a55770bf10c3b2357c33"]
 
-settings = {
-    "autoJoin": True,
-    "autoLeave": False,
-    "Inroom": True,
-    "Outroom": True,
-    "timeRestart": "18000",
-    "changeGroupPicture": [],
-    "limit": 50,
-    "limits": 50,
-    "wordban": [],
-    "keyCommand": "",
-    "myProfile": {
-        "displayName": "",
-        "coverId": "",
-        "pictureStatus": "",
-        "statusMessage": ""
-    },
-    "setKey": False,
-    "unsendMessage": True
-}
-
-read = {
-    "ROM": {},
-    "readPoint": {},
-    "readMember": {},
-    "readTime": {}
-}
-
 try:
     with open("Log_data.json","r",encoding="utf_8_sig") as f:
         msg_dict = json.loads(f.read())
 except:
     print("PUY")
-    
+
+readOpen = codecs.open("read.json","r","utf-8")
+settingsOpen = codecs.open("setting.json","r","utf-8")
+adminOpen = codecs.open("Admin.json","r","utf-8")
+ownerOpen = codecs.open("Owner.json","r","utf-8")
+
 settings["myProfile"]["displayName"] = puyProfile.displayName
 settings["myProfile"]["statusMessage"] = puyProfile.statusMessage
 settings["myProfile"]["pictureStatus"] = puyProfile.pictureStatus
@@ -198,7 +174,7 @@ def sendMention(to, text="", mids=[]):
 
 def command(text):
     pesan = text.lower()
-    if settings["setKey"] == True:
+    if settings["prefix"] == True:
         if pesan.startswith(settings["keyCommand"]):
             cmd = pesan.replace(settings["keyCommand"],"")
         else:
@@ -208,7 +184,7 @@ def command(text):
     return cmd
     
 def helpmessage():
-    if settings['setKey'] == True:
+    if settings['prefix'] == True:
         key = settings['keyCommand']
     else:
         key = ''
@@ -264,9 +240,9 @@ def puyBot(op):
                 msg_id = msg.id
                 receiver = msg.to
                 sender = msg._from
-                setKey = settings["keyCommand"].title()
-                if settings["setKey"] == False:
-                    setKey = ''
+                prefix = settings["keyCommand"].title()
+                if settings["prefix"] == False:
+                    prefix = ''
                 if msg.toType == 0 or msg.toType == 1 or msg.toType == 2:
                     if msg.toType == 0:
                         if sender != puy.profile.mid:
@@ -675,10 +651,10 @@ def puyBot(op):
                         if text.lower() == "#prefix":
                             puy.sendMessage(to, "\nPrefix Saat ini adalah [ {} ]\n".format(str(settings["keyCommand"])))                                                                                            
                         elif text.lower() == "prefix on":
-                            settings["setKey"] = True
+                            settings["prefix"] = True
                             puy.sendMention(to, "@! \n\n[ Notified Prefix Key ]\nBerhasil mengaktifkan Prefix", [sender])
                         elif text.lower() == "prefix off":
-                            settings["setKey"] = False
+                            settings["prefix"] = False
                             puy.sendMention(to, "@! \n\n[ Notified Prefix Key ]\nBerhasil menonaktifkan Prefix", [sender])
                             
                     if msg.contentType == 0:
