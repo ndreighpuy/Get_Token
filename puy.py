@@ -229,7 +229,7 @@ def helpmessage():
                     " 「 From Helloworld / Edited by Puy 」"
     return helpMessage
                     
-def piBot(op):
+def puyBot(op):
     try:
         if op.type == 0:
             print ("[ 0 ] END OF OPERATION")
