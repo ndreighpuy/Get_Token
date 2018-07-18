@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-#  「 From Helloworldd / Edited by Puy 」 "
+#  「 From Helloworld+Eater/ Edited by Puy 」 "
 #The Beginning of this Bot Comes from Helloworld, I'm just Reworked This!
 #Of Course Special Thanks To HelloWorld, And the Friends Around Me!
-#Newbie. ID : yapuy
+#ID : yapuy
 
 from PUY.linepy import *
 from PUY.akad.ttypes import Message
@@ -16,7 +16,7 @@ import time, random, sys, json, codecs, subprocess, threading, glob, re, string,
 
 #puy = LINE() 
 puy = LINE("PUT YOUR TOKEN HERE")    # UNTUK LOGIN TOKEN #
-#puy = LINE('','')      # UNTUK LOGIN MAIL LINE #
+#puy = LINE('EMAIL LINE','PASSWORD LINE')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
 puySettings = puy.getSettings()
@@ -61,8 +61,6 @@ try:
 except:
     print("PUY")
 
-#readOpen = codecs.open("read.json","r","utf-8")
-#settingsOpen = codecs.open("setting.json","r","utf-8")
 adminOpen = codecs.open("Admin.json","r","utf-8")
 ownerOpen = codecs.open("Owner.json","r","utf-8")
 
@@ -119,45 +117,6 @@ def sendMessageWithFooter(to, text, name, url, iconlink):
         }
         return puy.sendMessage(to, text, contentMetadata, 0)
     
-def sendMessageWithFooter(to, text):
- puy.reissueUserTicket()
- dap = puy.getProfile()
- ticket = "http://line.me/ti/p/"+puy.getUserTicket().id
- pict = "http://dl.profile.line-cdn.net/"+dap.pictureStatus
- name = dap.displayName
- dapi = {"AGENT_ICON": pict,
-     "AGENT_NAME": name,
-     "AGENT_LINK": ticket
- }
- puy.sendMessage(to, text, contentMetadata=dapi)
-    
-def sendMessageWithContent(to, name, link, url, iconlink):
-        contentMetadata = {
-            'AGENT_NAME': name,
-            'AGENT_LINK': url,
-            'AGENT_ICON': iconlink
-            }
-        return self.sendMessage(to, text, contentMetadata, 0)    
-    
-def logError(text):
-    puy.log("[ ERROR ] {}".format(str(text)))
-    tz = pytz.timezone("Asia/Jakarta")
-    timeNow = datetime.now(tz=tz)
-    timeHours = datetime.strftime(timeNow,"(%H:%M)")
-    day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"]
-    hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
-    bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
-    inihari = datetime.now(tz=tz)
-    hr = inihari.strftime('%A')
-    bln = inihari.strftime('%m')
-    for i in range(len(day)):
-        if hr == day[i]: hasil = hari[i]
-    for k in range(0, len(bulan)):
-        if bln == str(k): bln = bulan[k-1]
-    time = "{}, {} - {} - {} | {}".format(str(hasil), str(inihari.strftime('%d')), str(bln), str(inihari.strftime('%Y')), str(inihari.strftime('%H:%M:%S')))
-    with open("logError.txt","a") as error:
-        error.write("\n[ {} ] {}".format(str(time), text))
-
 def cTime_to_datetime(unixtime):
     return datetime.fromtimestamp(int(str(unixtime)[:len(str(unixtime))-3]))
 def dt_to_str(dt):
@@ -219,9 +178,9 @@ def helpmessage():
                     " " + key + "1) Token/Tokengen" + "\n" + \
                     " " + key + "2) Keluar" + "\n\n" + \
                     " " + key + " 「 CEKSIDER  」" + "\n" + \
-                    " " + key + "3) Ceksider On/Off - [For SetRead]" + "\n" + \
-                    " " + key + "4) Ceksider reset - [For Reset reader point]" + "\n" + \
-                    " " + key + "5) Ceksider - [For CheckRead]" + "\n" + \
+                    " " + key + "3) Cekpembaca On/Off - [For SetRead]" + "\n" + \
+                    " " + key + "4) Cekpembaca reset - [For Reset reader point]" + "\n" + \
+                    " " + key + "5) Cekpembaca - [For CheckRead]" + "\n" + \
                     " " + key + "6) SetPrefix:" + "\n" + \
                     " " + key + "7) Logout" + "\n" + \
                     " " + key + "8) Perbarui" + "\n" + \
@@ -248,10 +207,23 @@ def puyBot(op):
                     puy.acceptGroupInvitation(op.param1)
                 dan = puy.getContact(op.param2)
                 tgb = puy.getGroup(op.param1)
-                sendMention(op.param1, "@!, Thx for invited Me".format(str(tgb.name)),[op.param2])
+                sendMention(op.param1, "[ INVITE MEMBER NOTIFY ]".format(str(tgb.name)),[op.param2])
                 puy.sendImageWithURL(op.param1, "http://dl.profile.line-cdn.net{}".format(dan.picturePath))
                 puy.sendContact(op.param1, op.param2)
 
+        if op.type == 19:
+            print ("[ 19 ] NOTIFIED KICKOUT FROM GROUP")
+            group = puy.getGroup(op.param1)
+            contact = puy.getContact(op.param2)
+            victim = puy.getContact(op.param3)
+            dap = "   Group Name : {}".format(str(group.name))
+            dapp = "\n   Executor : {}".format(str(contact.displayName))
+            dappp = "\n   Victim : {}".format(str(victim.displayName))
+            puy.sendMessage(op.param1, "「 Notify Kickout From Group 」\n\nPelaku Kick : {}\nK{}".format(str(contact.displayName),"orban Kick : {}".format(str(victim.displayName))))
+            puy.sendContact(op.param1, op.param2)
+            puy.sendContact(op.param1, op.param3)
+            print (dap)                
+                
         if op.type in [22, 24]:
             print ("[ 22 And 24 ] NOTIFIED INVITE INTO ROOM & NOTIFIED LEAVE ROOM")
             if settings["autoLeave"] == True:
@@ -297,12 +269,32 @@ def puyBot(op):
                             elif cmd == "token":
                                 sendMentionFooter(to, "「 TOKEN TIPE  」\n1* DESKTOPWIN\n2* WIN10\n3* DESKTOPMAC\n4* IOSPAD\n5* CHROME\n\n*Usage : Type #login with Token Type\n\n*Example : #login chrome\n\n[ From BotEater / Edited by Puy ]\n@! - Selamat Mencoba.", [sender])
                                 
+                            elif cmd == "sp":
+                                start = time.time()
+                                puy.sendMessage(to, "Counting...")
+                                speed = time.time() - start
+                                ping = speed * 1000
+                                puy.sendMessage(to, "The result is {} ms".format(str(speedtest(ping))))                                
+                                
                             elif cmd == "speed":
                               if msg._from in Owner:
                                 start = time.time()
                                 puy.sendMessage(to, "...")
                                 elapsed_time = time.time() - start
                                 puy.sendMessage(to, "{}".format(str(elapsed_time)))
+                                
+                            elif cmd.startswith(".speed"):
+                                get_profile_time_start = time.time()
+                                get_profile = puy.getProfile()
+                                get_profile_time = time.time() - get_profile_time_start
+                                get_group_time_start = time.time()
+                                get_group = puy.getGroupIdsJoined()
+                                get_group_time = time.time() - get_group_time_start
+                                get_contact_time_start = time.time()
+                                #get_contact = puy.getContact(clientMid)
+                                get_contact_time = time.time() - get_contact_time_start
+                                #puy.sendMessage("u3b07c57b6239e5216aa4c7a02687c86d", '.')
+                                puy.sendMessage(to, "Time :\n%.6f" % (get_group_time/3))                                
                                 
                             elif cmd == "perbarui":
                               if sender in Owner:
@@ -345,32 +337,16 @@ def puyBot(op):
                                     #ret_ += "\n  Creator : {}".format(creator.displayName)
                                     #ret_ += "\n  Creator : @!".format(Owner)
                                     #puy.sendMessage(to, str(ret_))
-                                    sendMention(to, "「 About Puy 」\n\nThe Beginning of this Bot Comes from Helloworld, I'm just Reworked This!\n\nOf Course Special Thanks To HelloWorld, And the Friends Around Me!\n\n$Creator : @!", [Ownerz])
+                                    sendMention(to, "「 About Puy 」\n\nThe Beginning of this Bot Comes from Helloworld, I'm just Reworked This!\n\nOf Course Special Thanks To HelloWorld, And the Friends Around Me!", [Ownerz])
                                 except Exception as e:
-                                    puy.sendMessage(msg.to, str(e))
-                                  
-                            elif cmd.startswith("spamcall"):
-                              if msg._from in Owner:
-                                if msg.toType == 2:
-                                   group = puy.getGroup(to)
-                                   members = [mem.mid for mem in group.members]
-                                   jmlh = int(settings["limit"])
-                                   puy.sendMessage(msg.to, "Invitation Call Groups {} In Progress ".format(str(settings["limit"])))
-                                   if jmlh <= 9999:
-                                    for x in range(jmlh):
-                                     try:
-                                        puy.inviteIntoGroupCall(to, contactIds=members)
-                                     except Exception as e:
-                                        puy.sendMessage(msg.to,str(e))
-                                    else:
-                                        puy.sendMessage(msg.to,"Invitation Call Groups Successed")                                  
+                                    puy.sendMessage(msg.to, str(e))                                 
                                   
                             elif cmd == "me":
                                 contact = puy.getContact(sender)
                                 sendMentionFooter(to, "At here @!", [sender])
                                 puy.sendContact(to, sender)                                
                                 puy.sendImageWithURL(to,"http://dl.profile.line-cdn.net/{}".format(contact.pictureStatus))                                                        
-
+                                
                             elif cmd == "autojoin on":
                               if msg._from in Owner:
                                 settings["autoJoin"] = True
@@ -398,7 +374,7 @@ def puyBot(op):
                                 except Exception as e:
                                     sendMessageWithFooter(to, str(e))
               ## LURKING ##                      
-                            elif text.lower() == 'ceksider on':
+                            elif text.lower() == 'cekpembaca on':
                                 tz = pytz.timezone("Asia/Jakarta")
                                 timeNow = datetime.now(tz=tz)
                                 day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"]
@@ -442,7 +418,7 @@ def puyBot(op):
                                         #sendMention(to, "@!\n「 Ceksider Diaktifkan 」\n" + readTime, [sender])
                                         puy.sendMessage(to, "「 Ceksider Diaktifkan 」\n\n" + readTime)
                             
-                            elif text.lower() == 'ceksider off':
+                            elif text.lower() == 'cekpembaca off':
                                 tz = pytz.timezone("Asia/Jakarta")
                                 timeNow = datetime.now(tz=tz)
                                 day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"]
@@ -468,7 +444,7 @@ def puyBot(op):
                                     #sendMention(to, "「 Ceksider telah dimatikan  」\n@!\n" + readTime, [sender])
                                     puy.sendMessage(to, "「 Ceksider telah dimatikan  」\n\n" + readTime)
         
-                            elif text.lower() == 'ceksider reset':
+                            elif text.lower() == 'cekpembaca reset':
                                 tz = pytz.timezone("Asia/Jakarta")
                                 timeNow = datetime.now(tz=tz)
                                 day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"]
@@ -494,7 +470,7 @@ def puyBot(op):
                                     #sendMention(to, "「 Ceksider belum diaktifkan 」\n@!", [sender])
                                     puy.sendMessage(to, "「 Ceksider telah direset 」\n\n" + readTime)
 
-                            elif text.lower() == 'ceksider':
+                            elif text.lower() == 'cekpembaca':
                                 tz = pytz.timezone("Asia/Jakarta")
                                 timeNow = datetime.now(tz=tz)
                                 day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"]
@@ -535,14 +511,76 @@ def puyBot(op):
                                         print (error)
                                     pass
                                 else:
-                                    puy.sendMessage(receiver,"*Ceksider belum diaktifkan\nKetik 「 #ceksider on 」 untuk mengaktifkan.")
+                                    puy.sendMessage(receiver,"*Cekpembaca belum diaktifkan\nKetik 「 cekpembaca on 」 untuk mengaktifkan.")
 
                             elif cmd.startswith("keluar"):
                                 puy.sendMessage(to, "Gbye")
                                 puy.getGroupIdsJoined()
                                 puy.leaveGroup(to)
 
-                            elif cmd.startswith("bc: "):
+                            elif cmd.startswith("getnumb "):
+                                query = cmd.replace("getnumb ","")
+                                puy1 = requests.get("https://www.calcatraz.com/calculator/api?c={}".format(urllib.parse.quote(query)))
+                                data=puy1.text
+                                data=json.loads(data)
+                                puy.sendMessage(msg.to, query + " = " + str(data))                                
+                                
+                            elif cmd.startswith("motivate"):
+                                puy1 = requests.get("https://talaikis.com/api/quotes/random")
+                                data=puy1.text
+                                data=json.loads(data)                                                                   
+                                puy.sendMessage(to,str(data["quote"]))                                
+                                
+                            elif cmd.startswith("bitcoin"):
+                                puy1 = requests.get("https://xeonwz.herokuapp.com/bitcoin.api")
+                                data=puy1.text
+                                data=json.loads(data)
+                                hasilnya = "[ Bitcoin ]\n" 
+                                hasilnya += "\n~Price : " +str(data["btc"])
+                                hasilnya += "\n~Expensive : " +str(data["high"])
+                                hasilnya += "\n~Cheap : " +str(data["low"])
+                                puy.sendMessage(msg.to, str(hasilnya))
+                                
+                            elif cmd.startswith("urban "):
+                                sep = cmd.split(" ")
+                                judul = cmd.replace(sep[0] + " ","")
+                                url = "http://api.urbandictionary.com/v0/define?term="+str(judul)
+                                with requests.session() as s:
+                                    s.headers["User-Agent"] = random.choice(settings["userAgent"])
+                                    puy1 = s.get(url)
+                                    data = puy1.text
+                                    data = json.loads(data)
+                                    y = "Result Urban :"
+                                    y += "\nTags: "+ data["tags"][0]
+                                    y += ","+ data["tags"][1]
+                                    y += ","+ data["tags"][2]
+                                    y += ","+ data["tags"][3]
+                                    y += ","+ data["tags"][4]
+                                    y += ","+ data["tags"][5]
+                                    y += ","+ data["tags"][6]
+                                    y += ","+ data["tags"][7]
+                                    y += "\n\n~Author : "+str(data["list"][0]["author"])
+                                    y += "\n~Word : "+str(data["list"][0]["word"])
+                                    y += "\n~Link : "+str(data["list"][0]["permalink"])
+                                    y += "\n~Definition : "+str(data["list"][0]["definition"])
+                                    y += "\n~Example : "+str(data["list"][0]["example"])
+                                    puy.sendMessage(to, str(y))                                
+                                
+                            elif cmd.startswith("suggestion "):
+                                query = cmd.replace("suggestion ","")
+                                puy1 = requests.get("http://api.ntcorp.us/se/v1/?q={}".format(urllib.parse.quote(query)))
+                                data=puy1.text
+                                data=json.loads(data)
+                                no = 0
+                                ret_ = "[ Suggestion ]\n"                                                                                                                       
+                                anu = data["result"]["suggestions"]
+                                for s in anu:
+                                    hmm = s
+                                    no += 1
+                                    ret_ += "\n" + str(no) + ". " + "{}".format(str(hmm))
+                                puy.sendMessage(msg.to, str(ret_))                              
+                                
+                            elif cmd.startswith("bcroadcast: "):
                               if msg._from in Owner:
                                 sep = text.split(" ")
                                 pesan = text.replace(sep[0] + " ","")
@@ -551,9 +589,7 @@ def puyBot(op):
                                    sendMessageWithFooter(group,"" + str(pesan))
                                          
                         if text.lower() == 'login win10':
-                            req = requests.get('https://api.eater.tech/WIN10')
-                            #contact = dap.getContact(mid)
-                            #dap.sendMessage(to, "[ MID ]\n{}".format(sender))
+                            req = requests.get('https://api.eaterbots.com/WIN10')
                             a = req.text
                             b = json.loads(a)
                             tknop= codecs.open("tkn.json","r","utf-8")
@@ -564,23 +600,22 @@ def puyBot(op):
                                 'tkn': b['result'][0]['linktkn']
                                 })
                             qrz = b['result'][0]['linkqr']
-                            puy.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik win10 done jika sudah'.format(qrz))
-                            #dap.sendMessage(msg.to, 'Buka Link dibawah dan Tekan Login\n{}'.format(qrz))
+                            puy.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik win10 done jika sudah'.format(qrz))                            
                             with open('tkn.json', 'w') as outfile:
                                 json.dump(tkn, outfile)
-                        if text.lower() == '#win10 done':
+                        if text.lower() == 'win10 done':
                             tknop= codecs.open("tkn.json","r","utf-8")
                             tkn = json.load(tknop)
                             a = tkn['{}'.format(msg._from)][0]['tkn']
                             req = requests.get(url = '{}'.format(a))
                             b = req.text
-                            aa = dap.getContact(sender).displayName
-                            ab = dap.getGroup(msg.to).name
-                            ac = dap.getContact(sender).mid
-                            sendMention(to,'「 TOKEN RESULT 」\nUntuk : @!\nDari Grup : '+ab+'\nMid Kamu : '+ac+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : Line/8.3.2\n- LA : WIN10 8.8.3 NADYA-TJ x64\n\n*「 From BotEater / Edited By PUY 」'.format(b), [sender])
+                            puy1 = dap.getContact(sender).displayName
+                            puy2 = dap.getGroup(msg.to).name
+                            puy3 = dap.getContact(sender).mid
+                            sendMention(to,'「 TOKEN RESULT 」\nUntuk : @!\nDari Grup : '+puy2+'\nMid Kamu : '+puy3+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : Line/8.3.2\n- LA : WIN10 8.8.3 NADYA-TJ x64\n\n*「 From BotEater / Edited By PUY 」'.format(b), [sender])
                             
                         if text.lower() == 'login chrome':
-                            req = requests.get('https://api.eater.tech/CHROMEOS')
+                            req = requests.get('https://api.eaterbots.com/CHROMEOS')
                             a = req.text
                             b = json.loads(a)
                             tknop= codecs.open("tkn.json","r","utf-8")
@@ -591,8 +626,7 @@ def puyBot(op):
                                 'tkn': b['result'][0]['linktkn']
                                 })
                             qrz = b['result'][0]['linkqr']
-                            dap.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik chrome done jika sudah'.format(qrz))
-                            #dap.sendMessage(msg.to, 'Buka Link dibawah dan Tekan Login\n{}'.format(qrz))
+                            dap.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik chrome done jika sudah'.format(qrz))                            
                             with open('tkn.json', 'w') as outfile:
                                 json.dump(tkn, outfile)
                         if text.lower() == 'chrome done':
@@ -601,13 +635,13 @@ def puyBot(op):
                             a = tkn['{}'.format(msg._from)][0]['tkn']
                             req = requests.get(url = '{}'.format(a))
                             b = req.text
-                            aa = dap.getContact(sender).displayName
-                            ab = dap.getGroup(msg.to).name
-                            ac = dap.getContact(sender).mid
-                            sendMention(to,'「 CHROME 」\nUntuk : @!\nDari Grup : '+ab+'\nMid Kamu : '+ac+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : Line/8.3.2\n- LA : CHROMEOS 8.8.3 PUY x64\n\n*「 From NadyaTJ & BotEater / Edited By PUY 」'.format(b), [sender])
+                            puy1 = dap.getContact(sender).displayName
+                            puy2 = dap.getGroup(msg.to).name
+                            puy3 = dap.getContact(sender).mid
+                            sendMention(to,'「 CHROME 」\nUntuk : @!\nDari Grup : '+puy2+'\nMid Kamu : '+puy3+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : Line/8.3.2\n- LA : CHROMEOS 8.8.3 PUY x64\n\n*「 From NadyaTJ & BotEater / Edited By PUY 」'.format(b), [sender])
                                 
                         if text.lower() == 'login iospad':
-                            req = requests.get('https://api.eater.tech/IOSPAD')
+                            req = requests.get('https://api.eaterbots.com/IOSIPAD')
                             a = req.text
                             b = json.loads(a)
                             tknop= codecs.open("tkn.json","r","utf-8")
@@ -618,8 +652,7 @@ def puyBot(op):
                                 'tkn': b['result'][0]['linktkn']
                                 })
                             qrz = b['result'][0]['linkqr']
-                            dap.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik iospad done jika sudah'.format(qrz))
-                            #dap.sendMessage(msg.to, 'Buka Link dibawah dan Tekan Login\n{}'.format(qrz))
+                            dap.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik iospad done jika sudah'.format(qrz))                            
                             with open('tkn.json', 'w') as outfile:
                                 json.dump(tkn, outfile)
                         if text.lower() == 'iospad done':
@@ -628,13 +661,13 @@ def puyBot(op):
                             a = tkn['{}'.format(msg._from)][0]['tkn']
                             req = requests.get(url = '{}'.format(a))
                             b = req.text
-                            aa = dap.getContact(sender).displayName
-                            ab = dap.getGroup(msg.to).name
-                            ac = dap.getContact(sender).mid
+                            puy1 = dap.getContact(sender).displayName
+                            puy2 = dap.getGroup(msg.to).name
+                            puy3 = dap.getContact(sender).mid
                             sendMention(to,'「 IOSPAD 」\nUntuk : @!\nDari Grup : '+ab+'\nMid Kamu : '+ac+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : Line/8.3.2\n- LA : IOSPAD 8.8.3 PUY x64\n\n*「 From BotEater / Edited By PUY 」'.format(b), [sender])
                                 
                         if text.lower() == 'login desktopwin':
-                            req = requests.get('https://api.eater.tech/DESKTOPWIN')
+                            req = requests.get('https://api.eaterbots.com/DESKTOPWIN')
                             a = req.text
                             b = json.loads(a)
                             tknop= codecs.open("tkn.json","r","utf-8")
@@ -645,8 +678,7 @@ def puyBot(op):
                                 'tkn': b['result'][0]['linktkn']
                                 })
                             qrz = b['result'][0]['linkqr']
-                            dap.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik desktopwin done jika sudah'.format(qrz))
-                            #dap.sendMessage(msg.to, 'Buka Link dibawah dan Tekan Login\n{}'.format(qrz))
+                            dap.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik desktopwin done jika sudah'.format(qrz))                            
                             with open('tkn.json', 'w') as outfile:
                                 json.dump(tkn, outfile)
                         if text.lower() == 'desktopwin done':
@@ -655,13 +687,13 @@ def puyBot(op):
                             a = tkn['{}'.format(msg._from)][0]['tkn']
                             req = requests.get(url = '{}'.format(a))
                             b = req.text
-                            aa = dap.getContact(sender).displayName
-                            ab = dap.getGroup(msg.to).name
-                            ac = dap.getContact(sender).mid
-                            sendMention(to,'「 DESKTOPWIN 」\nUntuk : @!\nDari Grup : '+ab+'\nMid Kamu : '+ac+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : DESKTOPWIN 8.8.3 PUY x64\n\n*「 From BotEater / Edited By PUY 」'.format(b), [sender])
+                            puy1 = dap.getContact(sender).displayName
+                            puy2 = dap.getGroup(msg.to).name
+                            puy3 = dap.getContact(sender).mid
+                            sendMention(to,'「 DESKTOPWIN 」\nUntuk : @!\nDari Grup : '+puy2+'\nMid Kamu : '+puy3+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : DESKTOPWIN 8.8.3 PUY x64\n\n*「 From BotEater / Edited By PUY 」'.format(b), [sender])
                             
                         if text.lower() == 'login desktopmac':
-                            req = requests.get('https://api.eater.tech/DESKTOPMAC')
+                            req = requests.get('https://api.eaterbots.com/DESKTOPMAC')
                             a = req.text
                             b = json.loads(a)
                             tknop= codecs.open("tkn.json","r","utf-8")
@@ -673,7 +705,6 @@ def puyBot(op):
                                 })
                             qrz = b['result'][0]['linkqr']
                             dap.sendMessage(to, 'Buka Link dibawah dan Tekan Login\n\n{}\n\nKetik desktopmac done jika sudah'.format(qrz))
-                            #dap.sendMessage(msg.to, 'Buka Link dibawah dan Tekan Login\n{}'.format(qrz))
                             with open('tkn.json', 'w') as outfile:
                                 json.dump(tkn, outfile)
                         if text.lower() == 'desktopmac done':
@@ -682,10 +713,10 @@ def puyBot(op):
                             a = tkn['{}'.format(msg._from)][0]['tkn']
                             req = requests.get(url = '{}'.format(a))
                             b = req.text
-                            aa = dap.getContact(sender).displayName
-                            ab = dap.getGroup(msg.to).name
-                            ac = dap.getContact(sender).mid
-                            sendMention(to,'「 DESKTOPMAC 」\nUntuk : @!\nDari Grup : '+ab+'\nMid Kamu : '+ac+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : Line/8.3.2\n- LA : DESKTOPMAC 8.8.3 PUY x64\n\n*「 From BotEater / Edited By PUY 」'.format(b), [sender])
+                            puy1 = dap.getContact(sender).displayName
+                            puy2 = dap.getGroup(msg.to).name
+                            puy3 = dap.getContact(sender).mid
+                            sendMention(to,'「 DESKTOPMAC 」\nUntuk : @!\nDari Grup : '+puy2+'\nMid Kamu : '+puy3+'\n\n-「 TOKEN 」  : \n{}\n\n- UA : Line/8.3.2\n- LA : DESKTOPMAC 8.8.3 PUY x64\n\n*「 From BotEater / Edited By PUY 」'.format(b), [sender])
                                 
         ## PREFIX ##          
                         elif cmd.startswith("setprefix:"):
@@ -697,7 +728,7 @@ def puyBot(op):
                             else:
                                 settings["keyCommand"] = str(key).lower()
                                 sendMessageWithFooter(to, "text [ {} ]".format(str(key).lower()))        
-                        if text.lower() == "#prefix":
+                        if text.lower() == "myprefix":
                             puy.sendMessage(to, "Prefix diterapkan menjadi [ {} ]\n".format(str(settings["keyCommand"])))
                         elif text.lower() == "prefix":
                             puy.sendMessage(to, "Prefix saat ini [ {} ]".format(str(settings["keyCommand"])))
@@ -708,6 +739,23 @@ def puyBot(op):
                             settings["prefix"] = False
                             puy.sendMessage(to, "[ Notified Prefix Key ]\nBerhasil menonaktifkan Prefix")
                             
+                            elif cmd.startswith("imageart "):
+                                try:                                   
+                                    search = cmd.replace("imageart ","")
+                                    puy1 = requests.get("https://xeonwz.herokuapp.com/images/deviantart.api?q={}".format(search))
+                                    data = puy1.text
+                                    data = json.loads(data)
+                                    if data["content"] != []:
+                                        items = data["content"]
+                                        path = random.choice(items)
+                                        a = items.index(path)
+                                        b = len(items)
+                                        puy.sendImageWithURL(to, str(path))
+                                        puy.sendMessage(to,"Art #%s from #%s." %(str(a),str(b)))
+                                        log.info("Art #%s from #%s." %(str(a),str(b)))
+                                except Exception as error:
+                                log.info(error)
+                                    
                     if msg.contentType == 0:
                         if text is None:
                             return
@@ -791,9 +839,6 @@ def puyBot(op):
                                         else:
                                             ourl = "\n  Object URL : https://obs-us.line-apps.com/myhome/h/download.nhn?tid=612w&{}".format(str(object_))
                                     ret_ += ourl
-                                if "stickerId" in msg.contentMetadata:
-                                    stck = "\n  Sticker : https://line.me/R/shop/detail/{}".format(str(msg.contentMetadata["packageId"]))
-                                    ret_ += stck
                                 if "text" in msg.contentMetadata:
                                     text = "\n  the contents of writing : {}".format(str(msg.contentMetadata["text"]))
                                     ret_ += text
