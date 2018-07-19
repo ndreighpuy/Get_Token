@@ -739,22 +739,22 @@ def puyBot(op):
                             settings["prefix"] = False
                             puy.sendMessage(to, "[ Notified Prefix Key ]\nBerhasil menonaktifkan Prefix")
                             
-                            elif cmd.startswith("imageart "):
-                                try:                                   
-                                    search = cmd.replace("imageart ","")
-                                    puy1 = requests.get("https://xeonwz.herokuapp.com/images/deviantart.api?q={}".format(search))
-                                    data = puy1.text
-                                    data = json.loads(data)
-                                    if data["content"] != []:
-                                        items = data["content"]
-                                        path = random.choice(items)
-                                        a = items.index(path)
-                                        b = len(items)
-                                        puy.sendImageWithURL(to, str(path))
-                                        puy.sendMessage(to,"Art #%s from #%s." %(str(a),str(b)))
-                                        log.info("Art #%s from #%s." %(str(a),str(b)))
-                                except Exception as error:
-                                log.info(error)
+                        elif cmd.startswith("imageart "):
+                            try:                                   
+                                search = cmd.replace("imageart ","")
+                                puy1 = requests.get("https://xeonwz.herokuapp.com/images/deviantart.api?q={}".format(search))
+                                data = puy1.text
+                                data = json.loads(data)
+                                if data["content"] != []:
+                                    items = data["content"]
+                                    path = random.choice(items)
+                                    a = items.index(path)
+                                    b = len(items)
+                                    puy.sendImageWithURL(to, str(path))
+                                    puy.sendMessage(to,"Art #%s from #%s." %(str(a),str(b)))
+                                    log.info("Art #%s from #%s." %(str(a),str(b)))
+                            except Exception as error:
+                            log.info(error)
                                     
                     if msg.contentType == 0:
                         if text is None:
