@@ -14,7 +14,7 @@ from googletrans import Translator
 from humanfriendly import format_timespan, format_size, format_number, format_length
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
-#puy = LINE() 
+puy = LINE() 
 #puy = LINE("PUT YOUR TOKEN HERE")    # UNTUK LOGIN TOKEN #
 puy = LINE('yaudaiya18@gmail.com','Muhamad18')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
@@ -25,8 +25,8 @@ botStart = time.time()
 
 msg_dict = {}
 
-Owner = ["PUT YOUR MID HERE","uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583"]
-Admin =["PUT YOUR MID HERE","uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583"]
+Owner = ["uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583"]
+Admin =["uac8e3eaf1eb2a55770bf10c3b2357c33","u33ba9a93d30c1be155df24f5d4e3f583"]
 
 settings = {
     "autoJoin": True,
@@ -753,7 +753,9 @@ def puyBot(op):
                                     puy.sendImageWithURL(to, str(path))
                                     puy.sendMessage(to,"Art #%s from #%s." %(str(a),str(b)))
                                     log.info("Art #%s from #%s." %(str(a),str(b)))
-                                    
+                            except Exception as error:
+                                logError(error)
+                                traceback.print_tb(error.__traceback__)
                     if msg.contentType == 0:
                         if text is None:
                             return
