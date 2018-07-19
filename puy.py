@@ -15,8 +15,8 @@ from humanfriendly import format_timespan, format_size, format_number, format_le
 import time, random, sys, json, codecs, subprocess, threading, glob, re, string, os, requests, six, ast, pytz, urllib, urllib3, urllib.parse, traceback, atexit
 
 #puy = LINE() 
-puy = LINE("PUT YOUR TOKEN HERE")    # UNTUK LOGIN TOKEN #
-#puy = LINE('EMAIL LINE','PASSWORD LINE')      # UNTUK LOGIN MAIL LINE #
+#puy = LINE("PUT YOUR TOKEN HERE")    # UNTUK LOGIN TOKEN #
+puy = LINE('yaudaiya18@gmail.com','Muhamad18')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
 puySettings = puy.getSettings()
