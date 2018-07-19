@@ -753,8 +753,6 @@ def puyBot(op):
                                     puy.sendImageWithURL(to, str(path))
                                     puy.sendMessage(to,"Art #%s from #%s." %(str(a),str(b)))
                                     log.info("Art #%s from #%s." %(str(a),str(b)))
-                            except Exception as error:
-                            log.info(error)
                                     
                     if msg.contentType == 0:
                         if text is None:
