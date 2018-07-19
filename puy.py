@@ -130,6 +130,38 @@ def delete_log():
                 puy.deleteFile(msg_dict[data]["path"])
             del msg_dict[data]
             
+def backupData():
+    try:
+        backup = read
+        f = codecs.open('read.json','w','utf-8')
+        json.dump(backup, f, sort_keys=True, indent=4, ensure_ascii=False)
+#        backup = unsend
+#        f = codecs.open('unsend.json','w','utf-8')
+#        json.dump(backup, f, sort_keys=True, indent=4, ensure_ascii=False)
+        return True
+    except Exception as error:
+        logError(error)
+        return False            
+            
+def logError(text):
+    puy.log("[ ERROR ] {}".format(str(text)))
+    tz = pytz.timezone("Asia/Jakarta")
+    timeNow = datetime.now(tz=tz)
+    timeHours = datetime.strftime(timeNow,"(%H:%M)")
+    day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday","Friday", "Saturday"]
+    hari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
+    bulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+    inihari = datetime.now(tz=tz)
+    hr = inihari.strftime('%A')
+    bln = inihari.strftime('%m')
+    for i in range(len(day)):
+        if hr == day[i]: hasil = hari[i]
+    for k in range(0, len(bulan)):
+        if bln == str(k): bln = bulan[k-1]
+    time = "{}, {} - {} - {} | {}".format(str(hasil), str(inihari.strftime('%d')), str(bln), str(inihari.strftime('%Y')), str(inihari.strftime('%H:%M:%S')))
+    with open("logError.txt","a") as error:
+        error.write("\n[ {} ] {}".format(str(time), text))        
+        
 def sendMention(to, text="", mids=[]):
     arrData = ""
     arr = []
