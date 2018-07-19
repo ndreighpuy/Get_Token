@@ -16,7 +16,7 @@ import time, random, sys, json, codecs, subprocess, threading, glob, re, string,
 
 #puy = LINE() 
 #puy = LINE("PUT YOUR TOKEN HERE")    # UNTUK LOGIN TOKEN #
-puy = LINE('yaudaiya18@gmail.com','Muhamad18')      # UNTUK LOGIN MAIL LINE #
+puy = LINE('')      # UNTUK LOGIN MAIL LINE #
 puyMid = puy.profile.mid
 puyProfile = puy.getProfile()
 puySettings = puy.getSettings()
