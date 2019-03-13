@@ -18,13 +18,8 @@ $ python -m pip install -r requirements.txt
 
 ## * Of Course BIG THX TO *
 
-## Author
-Muhammad Mursalin Darmamawan / [@Alin](https://line.me/t/p/~muhmursalind)
-
 ## Author Linepy
 Fadhiil Rachman / [@fadhiilrachman](https://www.instagram.com/fadhiilrachman)
 
-
-
-## Contact Me At
-[PUY](https://line.me/ti/p/~yapuy)
+## Myself
+PUY / [@muh.khadaffy](https://www.instagra.com/muh.khadaffy)
